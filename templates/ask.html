@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask here</title>
+    <link href="static/css/bootstrap.css" rel="stylesheet" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+        <div class="container">
+          
+          <div>
+            
+            <a class="navbar-brand mx-auto" href="#">Asker</a>
+            <img src="static/question.svg" class="img-fluid mb-3" alt="Icon">
+          </div>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder=" &#128270 Ask Question" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Ask!!!</button>
+          </form>
+
+          
+          <div class="d-flex">
+                <div style="height: 50;" class="border my-1 w-100">
+                    <img src="1static/user_profile.jpg" class="rounded float-start" alt="img">
+                </div>
+                <div class="d-flex">
+                    <div class="mx-auto p-3">MySelf</div>
+                    <div class=".d-block">
+                        <div><a href="#" class="link-success">Settings</a></div>
+                        <div><a href="#" class="link-success">LogOut</a></div>
+                    </div>
+                </div>
+          </div>
+        </div>
+      </nav>
+      <main class="container mt-2">
+        <div class="row">
+          <section class="col vh-100">
+            <div class="d-flex align-items-center gap-2 mb-4">
+                <h1>Your Question</h1>
+                
+            </div>
+            
+                
+            
+            
+          <articles class="d-flex gap-3 flex-column">
+            
+            
+
+            
+            <div class="container">
+                <form>
+                    <div class="form-group mb-2">
+                        <textarea class="form-control" id="answerInput" rows="1" placeholder="Enter your question..." required></textarea>
+                    </div>
+                    <div class="form-group mb-2">
+                        <textarea class="form-control" id="answerInput" rows="6" placeholder="Enter description..."></textarea>
+                    </div>
+                    <div class="mb-2"></div>
+                    <h5> Tags: </h5>
+                    <div>
+                        <p class="d-inline-flex gap-1">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="button">Tag №1</button>
+                            <button type="button" class="btn btn-light border-secondary" data-bs-toggle="button">Tag №2</button>
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="button">Tag №3</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="button">Tag №4</button>
+                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="button">Tag №5</button>
+                            <button type="button" class="btn btn-outline-info" data-bs-toggle="button">Tag №6</button>
+                            <button type="button" class="btn btn-secodary" data-bs-toggle="button">Tag №7</button>
+                            
+                            <button type="button" class="btn btn-outline-dark" data-bs-toggle="button">Tag №8</button>
+                        </p>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success my-2">Publish</button>
+                </form>
+            </div>
+
+          </articles>
+          </section>
+          <aside class="col-3">
+
+            <section class="mb-3">
+                <h3>Popular tags</h3>
+                <div>
+                    <span class="badge rounded-pill text-bg-primary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №1</a></span>
+                    <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №2</a></span>
+                    <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №3</a></span>
+                    <span class="badge rounded-pill text-bg-danger"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №4</a></span>
+                    <span class="badge rounded-pill text-bg-warning"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №5</a></span>
+                    <span class="badge rounded-pill text-bg-info"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №6</a></span>
+                    <span class="badge rounded-pill text-bg-light"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №7</a></span>
+                    <span class="badge rounded-pill text-bg-dark"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №8</a></span>
+                </div>
+            </section>
+
+            <section>
+                <h3>Best members</h3>
+                <div>
+                    <p><a class="d-block link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">Mr. Beaver</a></p>
+                    <p><a class="d-block link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">Photonist</a></p>
+                    <p><a class="d-block link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">Krasnoglazik</a></p>
+                    <p><a class="d-block link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">Just Member</a></p>
+                    <p><a class="d-block link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">AmNyam</a></p>
+                    <p><a class="d-block link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">MySelf</a></p>
+                </div>
+            </section>
+
+        </aside>
+        </div>
+      </main>
+
+    <script src="static/js/bootstrap.bundle.js" ></script>
+</body>
+</html>
