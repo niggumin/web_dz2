@@ -15,7 +15,7 @@
           <div>
             
             <a class="navbar-brand mx-auto" href="#">Asker</a>
-            <img src="{% static "/question.svg" %}" class="img-fluid mb-3" alt="Icon">
+            <img src="/static/question.svg" class="img-fluid mb-3" alt="Icon">
           </div>
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder=" &#128270 Ask Question" aria-label="Search">
@@ -24,14 +24,12 @@
 
           
           <div class="d-flex">
-                <div style="max-height: 50; max-width: 50;" class="border w-100 mb-3">
-                    <img src="{% static "/img/user_profile.jpg" %}" class="rounded float-start" alt="img" style="width: 50px; height: 50px">
-                </div>
+                
                 <div class="d-flex">
-                    <div class="mx-auto p-3">MySelf</div>
+                    
                     <div class=".d-block">
-                        <div><a href="#" class="link-success">Settings</a></div>
-                        <div><a href="#" class="link-success">LogOut</a></div>
+                        <div><a href="#" class="link-success">Log In</a></div>
+                        <div><a href="#" class="link-success">Registrarion</a></div>
                     </div>
                 </div>
           </div>
@@ -45,19 +43,7 @@
             {% block content %}
             {% endblock %}
             
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link link-secondary">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link link-success" href="#">1</a></li>
-                <li class="page-item"><a class="page-link link-success" href="#">2</a></li>
-                <li class="page-item"><a class="page-link link-success" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link link-success" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
+          
           </section>
           <aside class="col-3">
 
