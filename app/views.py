@@ -14,7 +14,14 @@ for i in range(0,30):
                     'tag1' : 'Tag3',
                     'tag2' : 'Tag2',
                     })
-
+questions.append({ 
+                    'title': 'Question number ' + str(666),
+                    'author': "Mr. Beaver",
+                    'id': i,
+                    'text': 'Ты уже знаешь этот #ТЕКСТ',
+                    'tag1' : 'Tag5',
+                    'tag2' : 'Tag1',
+                    })
 answers = []
 for i in range(0,30):
     answers.append({ 
