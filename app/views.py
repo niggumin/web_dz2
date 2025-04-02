@@ -31,10 +31,11 @@ for i in range(0,30):
                     })
 
 def index(request):
-    pageNum = int(request.GET.get('page', 1))
+    
     paginator = Paginator(questions, 5)
-    page = paginator.page(pageNum)
+
     try:
+        pageNum = int(request.GET.get('page', 1))
         page = paginator.page(pageNum)
     except PageNotAnInteger:
         page = paginator.page(1)
@@ -45,9 +46,10 @@ def index(request):
 def hot(request):
 
     snoitseuq = questions[::-1]  
-    pageNum = request.GET.get('page')
+    
     paginator = Paginator(snoitseuq, 5)
     try:
+        pageNum = request.GET.get('page')
         page = paginator.page(pageNum)
     except PageNotAnInteger:
         page = paginator.page(1)
@@ -63,11 +65,12 @@ def tag(request, targetTag):
         if q.get('tag1') == targetTag or q.get('tag2') == targetTag
     ]
 
-    pageNum = request.GET.get('page')
+    
 
     paginator = Paginator(filtered_questions, 5)
 
     try:
+        pageNum = request.GET.get('page')
         page = paginator.page(pageNum)
     except PageNotAnInteger:
         page = paginator.page(1)
@@ -79,10 +82,11 @@ def tag(request, targetTag):
     # return render(request, 'tag.html', context={'questions': questions, 'targetTag': targetTag})
 
 def question(request, questionId):
-    pageNum = int(request.GET.get('page', 1))
+    
     paginator = Paginator(answers, 5)
-    page = paginator.page(pageNum)
+    
     try:
+        pageNum = int(request.GET.get('page', 1))
         page = paginator.page(pageNum)
     except PageNotAnInteger:
         page = paginator.page(1)
