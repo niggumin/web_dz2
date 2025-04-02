@@ -30,79 +30,65 @@ for i in range(0,30):
                     'text': '#ТЕКСТ I really do not know what answer will be more suitable for the situation which you have described and even can not give you even a simple advice about this complex topic.' + str(i),
                     })
 
-def index(request):
-    
-    paginator = Paginator(questions, 5)
+
+def pagination(collection, request):
+    paginator = Paginator(collection, 5)
 
     try:
         pageNum = int(request.GET.get('page', 1))
         page = paginator.page(pageNum)
-    except PageNotAnInteger:
+    except (PageNotAnInteger, EmptyPage, ValueError):
         page = paginator.page(1)
     except EmptyPage:
         page = paginator.page(paginator.num_pages)
+    return page
+
+
+def index(request):
+    
+    page = pagination(questions, request)
     return render(request, 'index.html', context={'questions': page.object_list, 'page_obj': page})
+
 
 def hot(request):
 
     snoitseuq = questions[::-1]  
     
-    paginator = Paginator(snoitseuq, 5)
-    try:
-        pageNum = request.GET.get('page')
-        page = paginator.page(pageNum)
-    except PageNotAnInteger:
-        page = paginator.page(1)
-    except EmptyPage:
-        page = paginator.page(paginator.num_pages)
+    page = pagination(snoitseuq, request)
 
     context = {'questions': page.object_list, 'page_obj': page}
     return render(request, 'hot.html', context=context)
 
+
 def tag(request, targetTag):
-    filtered_questions = [
+    filteredQuestions = [
         q for q in questions
         if q.get('tag1') == targetTag or q.get('tag2') == targetTag
     ]
-
-    
-
-    paginator = Paginator(filtered_questions, 5)
-
-    try:
-        pageNum = request.GET.get('page')
-        page = paginator.page(pageNum)
-    except PageNotAnInteger:
-        page = paginator.page(1)
-    except EmptyPage:
-        page = paginator.page(paginator.num_pages)
+    page = pagination(filteredQuestions, request)
 
     context = {'questions': page.object_list, 'page_obj': page, 'targetTag': targetTag}
     return render(request, 'tag.html', context=context)
-    # return render(request, 'tag.html', context={'questions': questions, 'targetTag': targetTag})
+
 
 def question(request, questionId):
     
-    paginator = Paginator(answers, 5)
-    
-    try:
-        pageNum = int(request.GET.get('page', 1))
-        page = paginator.page(pageNum)
-    except PageNotAnInteger:
-        page = paginator.page(1)
-    except EmptyPage:
-        page = paginator.page(paginator.num_pages)
+    page = pagination(answers, request)
     
     return render(request, 'question.html', context={'question': questions[questionId], 'answers': page.object_list, 'page_obj': page})
+
 
 def login(request):
     return render(request, 'login.html')
 
+
 def signup(request):
     return render(request, 'signup.html')
 
+
 def ask(request):
     return render(request, 'ask.html')
+
 
 def settings(request):
     return render(request, 'settings.html')
