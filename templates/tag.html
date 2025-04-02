@@ -4,12 +4,12 @@
 
 {% block content %}
             <div class="d-flex align-items-center gap-2 mb-4">
-                <h1>Hot Questions</h1>
-                <a href="{% url "index" %}" class="link-success">New Questions</a>
+                <h1>Questions with tag {{ targetTag }}</h1>
             </div>
           
           <articles class="d-flex gap-3 flex-column">
             {% for question in questions %}
+            {% if targetTag == question.tag1 or targetTag == question.tag2 %}
               <div class="card">
                 <div class="card-body">
                   <div class="row">
@@ -19,17 +19,17 @@
                           <img src="static/img/asker_picture.png" alt="img" class="img-fluid" style="height: 65px; width: 65px;">
                         </div>    
                         <div class="btn-group-vertical">
-                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-                          <label class="btn btn-outline-success" for="vbtn-radio1">Likes 0</label>
-                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
-                          <label class="btn btn-outline-danger" for="vbtn-radio3">Dislikes 12</label>
+                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio{{question.id}}" autocomplete="off" checked>
+                          <label class="btn btn-outline-success" for="vbtn-radio{{question.id}}">Likes 0</label>
+                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio-{{question.id}}" autocomplete="off">
+                          <label class="btn btn-outline-danger" for="vbtn-radio-{{question.id}}">Dislikes 12</label>
                         </div>
                       </div>
                     </div>
                     <div class="col d-flex flex-column justify-content-between">
                       <div>
                         <h5 class="card-title px-2"><a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{% url 'question' question.id %}">{{ question.title }} </a> - question by <a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">{{ question.author }}</a></h5>
-                        <p class="card-text px-2"> {{ question.text}}</p>
+                        <p class="card-text px-2"> {{ question.text }}</p>
                       </div>
                               <div class="row">
                                   <div class="col-9">
@@ -46,6 +46,7 @@
                     </div>
                   </div>
               </div>
+              {% endif %}
               {% endfor %}
           </articles>
           

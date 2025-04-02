@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ask here</title>
-    <link href="static/css/bootstrap.css" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
           
           <div>
             
-            <a class="navbar-brand mx-auto" href="#">Asker</a>
+            <a class="navbar-brand mx-auto" href="{% url "index" %}">Asker</a>
             <img src="{% static "/question.svg" %}" class="img-fluid mb-3" alt="Icon">
           </div>
           <form class="d-flex" role="search">
@@ -30,7 +30,7 @@
                 <div class="d-flex">
                     <div class="mx-auto p-3">MySelf</div>
                     <div class=".d-block">
-                        <div><a href="#" class="link-success">Settings</a></div>
+                        <div><a href="{% url "settings" %}" class="link-success">Settings</a></div>
                         <div><a href="#" class="link-success">LogOut</a></div>
                     </div>
                 </div>
@@ -64,14 +64,14 @@
             <section class="mb-3">
                 <h3>Popular tags</h3>
                 <div>
-                    <span class="badge rounded-pill text-bg-primary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №1</a></span>
-                    <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №2</a></span>
-                    <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №3</a></span>
-                    <span class="badge rounded-pill text-bg-danger"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №4</a></span>
-                    <span class="badge rounded-pill text-bg-warning"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №5</a></span>
-                    <span class="badge rounded-pill text-bg-info"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №6</a></span>
-                    <span class="badge rounded-pill text-bg-light"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №7</a></span>
-                    <span class="badge rounded-pill text-bg-dark"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №8</a></span>
+                    <span class="badge rounded-pill text-bg-primary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag1' %}">Tag1</a></span>
+                    <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag2' %}">Tag2</a></span>
+                    <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag3' %}">Tag3</a></span>
+                    <span class="badge rounded-pill text-bg-danger"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag4' %}">Tag4</a></span>
+                    <span class="badge rounded-pill text-bg-warning"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag5' %}">Tag5</a></span>
+                    <span class="badge rounded-pill text-bg-info"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag6' %}">Tag6</a></span>
+                    <span class="badge rounded-pill text-bg-light"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag7' %}">Tag7</a></span>
+                    <span class="badge rounded-pill text-bg-dark"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag8' %}">Tag8</a></span>
                 </div>
             </section>
 
@@ -91,6 +91,6 @@
         </div>
       </main>
 
-    <script src="static/js/bootstrap.bundle.js" ></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
 </html>

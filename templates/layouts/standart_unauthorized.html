@@ -28,8 +28,8 @@
                 <div class="d-flex">
                     
                     <div class=".d-block">
-                        <div><a href="#" class="link-success">Log In</a></div>
-                        <div><a href="#" class="link-success">Registrarion</a></div>
+                        <div><a href="{% url "login" %}" class="link-success">Log In</a></div>
+                        <div><a href="signup" class="link-success">Registrarion</a></div>
                     </div>
                 </div>
           </div>
@@ -50,14 +50,14 @@
             <section class="mb-3">
                 <h3>Popular tags</h3>
                 <div>
-                    <span class="badge rounded-pill text-bg-primary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №1</a></span>
-                    <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №2</a></span>
-                    <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №3</a></span>
-                    <span class="badge rounded-pill text-bg-danger"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №4</a></span>
-                    <span class="badge rounded-pill text-bg-warning"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №5</a></span>
-                    <span class="badge rounded-pill text-bg-info"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №6</a></span>
-                    <span class="badge rounded-pill text-bg-light"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="#">Tag №7</a></span>
-                    <span class="badge rounded-pill text-bg-dark"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">Tag №8</a></span>
+                  <span class="badge rounded-pill text-bg-primary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag1' %}">Tag1</a></span>
+                  <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag2' %}">Tag2</a></span>
+                  <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag3' %}">Tag3</a></span>
+                  <span class="badge rounded-pill text-bg-danger"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag4' %}">Tag4</a></span>
+                  <span class="badge rounded-pill text-bg-warning"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag5' %}">Tag5</a></span>
+                  <span class="badge rounded-pill text-bg-info"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag6' %}">Tag6</a></span>
+                  <span class="badge rounded-pill text-bg-light"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag7' %}">Tag7</a></span>
+                  <span class="badge rounded-pill text-bg-dark"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag8' %}">Tag8</a></span>
                 </div>
             </section>
 

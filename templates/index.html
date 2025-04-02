@@ -19,26 +19,26 @@
                           <img src="static/img/asker_picture.png" alt="img" class="img-fluid" style="height: 65px; width: 65px;">
                         </div>    
                         <div class="btn-group-vertical">
-                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-                          <label class="btn btn-outline-success" for="vbtn-radio1">Likes 0</label>
-                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
-                          <label class="btn btn-outline-danger" for="vbtn-radio3">Dislikes 12</label>
+                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio{{question.id}}" autocomplete="off" checked>
+                          <label class="btn btn-outline-success" for="vbtn-radio{{question.id}}">Likes 0</label>
+                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio-{{question.id}}" autocomplete="off">
+                          <label class="btn btn-outline-danger" for="vbtn-radio-{{question.id}}">Dislikes 12</label>
                         </div>
                       </div>
                     </div>
                     <div class="col d-flex flex-column justify-content-between">
                       <div>
-                        <h5 class="card-title px-2"><a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="/question.html">{{ question.title }} </a> - question by <a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">{{ question.author }}</a></h5>
+                        <h5 class="card-title px-2"><a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{% url 'question' question.id %}">{{ question.title }} </a> - question by <a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">{{ question.author }}</a></h5>
                         <p class="card-text px-2"> {{ question.text}}</p>
                       </div>
                               <div class="row">
                                   <div class="col-9">
-                                      <a href="#" class="link-success px-2">Answers (3)</a>
+                                      <a href="{% url 'question' question.id %}" class="link-success px-2">Answers (3)</a>
                                   </div>
                                   <div class="col">
                                       <span>Tags:</span>
-                                      <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">{{question.tag1}}</a></span>
-                                      <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="#">{{ question.tag2 }}</a></span>
+                                      <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' question.tag1 %}">{{question.tag1}}</a></span>
+                                      <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' question.tag2 %}">{{ question.tag2 }}</a></span>
 
                                   </div>
                               </div>
