@@ -4,19 +4,19 @@
 
 {% block content %}
             <div class="d-flex align-items-center gap-2 mb-4">
-                <h1>Questions with tag {{ targetTag }}</h1>
+                <h1>Questions with tag: "{{ targetTag }}"</h1>
             </div>
           
           <articles class="d-flex gap-3 flex-column">
             {% for question in questions %}
-            {% if targetTag == question.tag1 or targetTag == question.tag2 %}
+            
               <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-1">
                       <div class="d-flex flex-column align-items-center">
                         <div class="border mb-2">
-                          <img src="static/img/asker_picture.png" alt="img" class="img-fluid" style="height: 65px; width: 65px;">
+                          <img src="{% static "img/asker_picture.png" %}" alt="img" class="img-fluid" style="height: 65px; width: 65px;">
                         </div>    
                         <div class="btn-group-vertical">
                           <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio{{question.id}}" autocomplete="off" checked>
@@ -46,10 +46,10 @@
                     </div>
                   </div>
               </div>
-              {% endif %}
-              {% endfor %}
+            
+            {% endfor %}
           </articles>
-          
+          {% include "layouts/pagination.html" %}
 
           
 {% endblock %}

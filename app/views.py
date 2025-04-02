@@ -1,7 +1,7 @@
 import copy
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 questions = []
@@ -24,22 +24,65 @@ for i in range(0,30):
                     })
 
 def index(request):
-    return render(request, 'index.html', context={'questions': questions})
+    pageNum = int(request.GET.get('page', 1))
+    paginator = Paginator(questions, 5)
+    page = paginator.page(pageNum)
+    try:
+        page = paginator.page(pageNum)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+    return render(request, 'index.html', context={'questions': page.object_list, 'page_obj': page})
 
 def hot(request):
-    snoitseuq = reversed(copy.deepcopy(questions))
-    return render(request, 'hot.html', context={'questions': snoitseuq})
+
+    snoitseuq = questions[::-1]  
+    pageNum = request.GET.get('page')
+    paginator = Paginator(snoitseuq, 5)
+    try:
+        page = paginator.page(pageNum)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    context = {'questions': page.object_list, 'page_obj': page}
+    return render(request, 'hot.html', context=context)
 
 def tag(request, targetTag):
-    
-    return render(request, 'tag.html', context={'questions': questions, 'targetTag': targetTag})
+    filtered_questions = [
+        q for q in questions
+        if q.get('tag1') == targetTag or q.get('tag2') == targetTag
+    ]
+
+    pageNum = request.GET.get('page')
+
+    paginator = Paginator(filtered_questions, 5)
+
+    try:
+        page = paginator.page(pageNum)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+
+    context = {'questions': page.object_list, 'page_obj': page, 'targetTag': targetTag}
+    return render(request, 'tag.html', context=context)
+    # return render(request, 'tag.html', context={'questions': questions, 'targetTag': targetTag})
 
 def question(request, questionId):
-   
-    if questionId == -1:
-        return HttpResponse("WRONG ID")
+    pageNum = int(request.GET.get('page', 1))
+    paginator = Paginator(answers, 5)
+    page = paginator.page(pageNum)
+    try:
+        page = paginator.page(pageNum)
+    except PageNotAnInteger:
+        page = paginator.page(1)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
     
-    return render(request, 'question.html', context={'question': questions[questionId], 'answers': answers})
+    return render(request, 'question.html', context={'question': questions[questionId], 'answers': page.object_list, 'page_obj': page})
 
 def login(request):
     return render(request, 'login.html')
@@ -49,3 +92,6 @@ def signup(request):
 
 def ask(request):
     return render(request, 'ask.html')
+
+def settings(request):
+    return render(request, 'settings.html')
