@@ -48,7 +48,7 @@ class Command(BaseCommand):
             questions = []
             for i in range(num_questions):
                 title = f'Random Question {i} ' + get_random_string(20)
-                content = f'Random content for question {i} ' + get_random_string(100)
+                content = f'Random content for question {i} ' + get_random_string(50)
                 author = random.choice(profiles)
                 questions.append(Question(title=title, content=content, author=author))
 
@@ -86,7 +86,7 @@ class Command(BaseCommand):
             answers = []
             for i in range(num_answers):
                 question = random.choice(questions)
-                content = f'Random answer content {i} ' + get_random_string(150)
+                content = f'Random answer content {i} ' + get_random_string(50)
                 author = random.choice(profiles)
                 answers.append(Answer(question=question, content=content, author=author))
             Answer.objects.bulk_create(answers)
@@ -96,12 +96,12 @@ class Command(BaseCommand):
             self.stdout.write('Creating likes/dislikes...')
             num_total_ratings = num_ratings * 2  # Total likes and dislikes for both Question and Answer
 
-            # Prepare data for QuestionLikes and QuestionDislikes
+            
             question_likes = []
             question_dislikes = []
             question_pairs = set()
 
-            # Prepare data for AnswerLikes and AnswerDislikes
+            
             answer_likes = []
             answer_dislikes = []
             answer_pairs = set()
@@ -110,7 +110,7 @@ class Command(BaseCommand):
             answer_model_count = Answer.objects.count()
             users_count = User.objects.count()
 
-            for _ in range(num_total_ratings): # num_total_ratings
+            for _ in range(num_total_ratings): 
                 user = users[random.randint(0,users_count - 1)]
                 if random.random() < 0.5: # QuestionLike , QuestionDislike
 

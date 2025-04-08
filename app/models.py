@@ -14,11 +14,13 @@ class QuestionManager(models.Manager):
 
     def with_tag(self, tag_name):
         return self.filter(tag__name = tag_name)
+    
+    
 
 class AnswerManager(models.Manager):
 
     def under_question(self, question):
-        return self.get_queryset().filter(question=question)
+        return self.filter(question=question)
 
 # Create your models here.
 
@@ -46,19 +48,20 @@ class Question(models.Model):
     content = models.TextField()
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)  
     tags = models.ManyToManyField(Tag, blank=True)  
-    # likes = models.IntegerField(default=0) 
-    # dislikes = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = QuestionManager()  
 
-    @property
+    
     def likes_count(self):
         return self.likes.count()
 
-    @property
+    
     def dislikes_count(self):
         return self.dislikes.count()
+    
+    def answers_count(self):  
+        return self.answer_set.count()
 
     def __str__(self):
         return self.title
@@ -68,16 +71,14 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)  
     content = models.TextField()
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)  
-    # likes = models.IntegerField(default=0) 
-    # dislikes = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    @property
+    
     def likes_count(self):
         return self.likes.count()
 
-    @property
+    
     def dislikes_count(self):
         return self.dislikes.count()
     

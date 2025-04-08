@@ -1,6 +1,7 @@
+import bleach
 from .models import Question, Answer, Tag
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
@@ -20,7 +21,7 @@ def pagination(collection, request):
 
 
 def index(request):
-    questions = Question.objects.all()
+    questions = Question.objects.new()
     page = pagination(questions, request)
 
     context={'questions': page.object_list, 'page_obj': page}
@@ -49,12 +50,16 @@ def tag(request, targetTag):
 
 
 def question(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    answers = Answer.objects.under_question(question)
-    page = pagination(answers, request)
-    
-    context={'question': question, 'answers': page.object_list, 'page_obj': page}
-    return render(request, 'question.html', context=context)
+    try:
+        question = get_object_or_404(Question, pk=question_id)
+        answers = question.answer_set.all()  
+        page = pagination(answers, request)
+        question.content = bleach.clean(question.content, strip=True)
+
+        context = {'question': question, 'answers': page.object_list, 'page_obj': page}
+        return render(request, 'question.html', context=context)
+    except Http404:
+        return HttpResponse("Question not found", status=404)
 
 
 def login(request):
