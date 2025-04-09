@@ -39,7 +39,9 @@
                                       <span>Tags:</span>
                                       
                                       {% for tag in question.tags.all %}
-                                        <a class="link-offset-2 link-underline link-underline-opacity-0 link-success" href="{% url 'tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                        <span class="badge rounded-pill text-bg-success">
+                                          <a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                        </span>                                        
                                         {% empty %}
                                         No tags yet
                                       {% endfor %}

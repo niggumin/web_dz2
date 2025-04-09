@@ -3,6 +3,7 @@ from .models import Question, Answer, Tag
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
 # Create your views here.
 
 
@@ -19,20 +20,30 @@ def pagination(collection, request):
         page = paginator.page(paginator.num_pages)
     return page
 
+def get_popular_tags(): 
+    
+    popular_tags = Tag.objects.annotate(question_count=Count('question')).order_by('-question_count')[:6]
+    return popular_tags
+
+
+# Controllers
 
 def index(request):
     questions = Question.objects.new()
     page = pagination(questions, request)
+    popular_tags = get_popular_tags()
 
-    context={'questions': page.object_list, 'page_obj': page}
+    context={'questions': page.object_list, 'page_obj': page, 'popular_tags': popular_tags}
     return render(request, 'index.html', context=context)
 
 
 def hot(request):
     questions = Question.objects.best()
     page = pagination(questions, request)
+    popular_tags = get_popular_tags()
 
-    context = {'questions': page.object_list, 'page_obj': page}
+
+    context = {'questions': page.object_list, 'page_obj': page, 'popular_tags': popular_tags}
     return render(request, 'hot.html', context=context)
 
 
@@ -44,8 +55,10 @@ def tag(request, targetTag):
     else:
         questions = Question.objects.filter(tags=tag)
     page = pagination(questions, request)
+    popular_tags = get_popular_tags()
 
-    context = {'questions': page.object_list, 'page_obj': page, 'targetTag': targetTag}
+
+    context = {'questions': page.object_list, 'page_obj': page, 'targetTag': targetTag, 'popular_tags': popular_tags}
     return render(request, 'tag.html', context=context)
 
 
@@ -54,25 +67,34 @@ def question(request, question_id):
         question = get_object_or_404(Question, pk=question_id)
         answers = question.answer_set.all()  
         page = pagination(answers, request)
-        question.content = bleach.clean(question.content, strip=True)
+        popular_tags = get_popular_tags()
 
-        context = {'question': question, 'answers': page.object_list, 'page_obj': page}
+
+        context = {'question': question, 'answers': page.object_list, 'page_obj': page, 'popular_tags': popular_tags}
         return render(request, 'question.html', context=context)
     except Http404:
         return HttpResponse("Question not found", status=404)
 
 
 def login(request):
-    return render(request, 'login.html')
+    popular_tags = get_popular_tags()
+
+    return render(request, 'login.html', context={'popular_tags': popular_tags})
 
 
 def signup(request):
-    return render(request, 'signup.html')
+    popular_tags = get_popular_tags()
+
+    return render(request, 'signup.html', context={'popular_tags': popular_tags})
 
 
 def ask(request):
-    return render(request, 'ask.html')
+    popular_tags = get_popular_tags()
+
+    return render(request, 'ask.html', context={'popular_tags': popular_tags})
 
 
 def settings(request):
-    return render(request, 'settings.html')
+    popular_tags = get_popular_tags()
+
+    return render(request, 'settings.html', context={'popular_tags': popular_tags})

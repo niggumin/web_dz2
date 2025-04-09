@@ -32,14 +32,16 @@
                         <p class="card-text px-2"> {{ question.content }}</p>
                       </div>
                               <div class="row">
-                                  <div class="col-7">
+                                  <div class="col-6">
                                       <a href="{% url 'question' question.id %}" class="link-success px-2">Answers ({{question.answers_count}})</a>
                                   </div>
                                   <div class="col">
                                       <span>Tags:</span>
                                       
                                       {% for tag in question.tags.all %}
-                                        <a class="link-offset-2 link-underline link-underline-opacity-0 link-success" href="{% url 'tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                        <span class="badge rounded-pill text-bg-success">
+                                          <a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                        </span>
                                         {% empty %}
                                         No tags yet
                                       {% endfor %}

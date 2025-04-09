@@ -14,12 +14,12 @@
           
           <div>
             
-            <a class="navbar-brand mx-auto" href="{% url "index" %}">Asker</a>
-            <img src="{% static "/question.svg" %}" class="img-fluid mb-3" alt="Icon">
+            <a class="navbar-brand mx-auto" href="{% url 'index' %}">Asker</a>
+            <img src="{% static '/question.svg' %}" class="img-fluid mb-3" alt="Icon">
           </div>
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder=" &#128270 Ask Question" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit"><a href="{% url "ask" %}" class="text-light:hover link-offset-2 link-underline link-underline-opacity-0 link-success" >Ask!!!</a></button>
+            <button class="btn btn-outline-success" type="submit"><a href="{% url 'ask' %}" class="text-light:hover link-offset-2 link-underline link-underline-opacity-0 link-success" >Ask!!!</a></button>
           </form>
 
           
@@ -52,14 +52,11 @@
             <section class="mb-3">
                 <h3>Popular tags</h3>
                 <div>
-                    <span class="badge rounded-pill text-bg-primary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag1' %}">Tag1</a></span>
-                    <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag2' %}">Tag2</a></span>
-                    <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag3' %}">Tag3</a></span>
-                    <span class="badge rounded-pill text-bg-danger"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag4' %}">Tag4</a></span>
-                    <span class="badge rounded-pill text-bg-warning"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag5' %}">Tag5</a></span>
-                    <span class="badge rounded-pill text-bg-info"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag6' %}">Tag6</a></span>
-                    <span class="badge rounded-pill text-bg-light"><a class="link-offset-2 link-underline link-underline-opacity-0 link-dark" href="{% url 'tag' 'Tag7' %}">Tag7</a></span>
-                    <span class="badge rounded-pill text-bg-dark"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' 'Tag8' %}">Tag8</a></span>
+                  {% for tag in popular_tags %}
+                  <span class="badge rounded-pill text-bg-success">
+                      <a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' tag.name %}">{{ tag.name }}</a>
+                  </span>
+                  {% endfor %}
                 </div>
             </section>
 
