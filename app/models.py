@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 # from django.db.models import Q
+from django.db.models import Count
+
 
 
 # Managers
 
 class QuestionManager(models.Manager):
     def best(self):
-        return self.order_by('-likes')  
-
+        return self.annotate(num_likes=Count('likes')).order_by('-num_likes')
     def new(self):
         return self.order_by('-created_at')
 

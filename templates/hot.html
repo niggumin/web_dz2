@@ -5,7 +5,7 @@
 {% block content %}
             <div class="d-flex align-items-center gap-2 mb-4">
                 <h1>Hot Questions</h1>
-                <a href="{% url "index" %}" class="link-success">New Questions</a>
+                <a href="{% url 'index' %}" class="link-success">New Questions</a>
             </div>
           
           <articles class="d-flex gap-3 flex-column">
@@ -16,30 +16,34 @@
                     <div class="col-1">
                       <div class="d-flex flex-column align-items-center">
                         <div class="border mb-2">
-                          <img src="{% static "/img/asker_picture.png" %}" alt="img" class="img-fluid" style="height: 65px; width: 65px;">
+                          <img src="{% static '/img/asker_picture.png' %}" alt="img" class="img-fluid" style="height: 65px; width: 65px;">
                         </div>    
                         <div class="btn-group-vertical">
-                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" checked>
-                          <label class="btn btn-outline-success" for="vbtn-radio1">Likes 0</label>
-                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off">
-                          <label class="btn btn-outline-danger" for="vbtn-radio3">Dislikes 12</label>
+                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio{{question.id}}" autocomplete="off" checked>
+                          <label class="btn btn-outline-success" for="vbtn-radio{{question.id}}">Likes {{question.likes_count}}</label>
+                          <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio-{{question.id}}" autocomplete="off">
+                          <label class="btn btn-outline-danger" for="vbtn-radio-{{question.id}}">Dislikes {{question.dislikes_count}}</label>
                         </div>
                       </div>
                     </div>
                     <div class="col d-flex flex-column justify-content-between">
                       <div>
                         <h5 class="card-title px-2"><a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{% url 'question' question.id %}">{{ question.title }} </a> - question by <a class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="#">{{ question.author }}</a></h5>
-                        <p class="card-text px-2"> {{ question.text}}</p>
+                        <p class="card-text px-2"> {{ question.content }}</p>
                       </div>
                               <div class="row">
-                                  <div class="col-9">
-                                      <a href="{% url 'question' question.id %}" class="link-success px-2">Answers (3)</a>
+                                  <div class="col-7">
+                                      <a href="{% url 'question' question.id %}" class="link-success px-2">Answers ({{question.answers_count}})</a>
                                   </div>
                                   <div class="col">
                                       <span>Tags:</span>
-                                      <span class="badge rounded-pill text-bg-success"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' question.tag1 %}">{{question.tag1}}</a></span>
-                                      <span class="badge rounded-pill text-bg-secondary"><a class="link-offset-2 link-underline link-underline-opacity-0 link-light" href="{% url 'tag' question.tag1 %}">{{ question.tag2 }}</a></span>
-
+                                      
+                                      {% for tag in question.tags.all %}
+                                        <a class="link-offset-2 link-underline link-underline-opacity-0 link-success" href="{% url 'tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                                        {% empty %}
+                                        No tags yet
+                                      {% endfor %}
+                                      
                                   </div>
                               </div>
                       </div>
@@ -49,6 +53,7 @@
               {% endfor %}
           </articles>
           {% include "components/pagination.html" %}
+          
 
           
 {% endblock %}
