@@ -139,3 +139,4 @@ class Command(BaseCommand):
 
             self.stdout.write(self.style.SUCCESS('Likes and dislikes created. Exiting'))
         self.stdout.write(self.style.SUCCESS('Finished filling the database!'))
+        

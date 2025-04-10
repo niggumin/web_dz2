@@ -10,6 +10,7 @@ from django.db.models import Count
 class QuestionManager(models.Manager):
     def best(self):
         return self.annotate(num_likes=Count('likes')).order_by('-num_likes')
+    
     def new(self):
         return self.order_by('-created_at')
 
