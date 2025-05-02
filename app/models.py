@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from django.db.models import Q
 from django.db.models import Count
 
 
@@ -29,7 +28,7 @@ class AnswerManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)  
+    avatar = models.ImageField(blank=True, null=True)  
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -89,7 +88,7 @@ class Answer(models.Model):
 
 
 class QuestionLike(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='likes')  # Added related_name
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='likes')  
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -98,7 +97,7 @@ class QuestionLike(models.Model):
         unique_together = ('question', 'user')
 
 class QuestionDislike(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='dislikes')  # Added related_name
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='dislikes')  
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -107,7 +106,7 @@ class QuestionDislike(models.Model):
         unique_together = ('question', 'user')
 
 class AnswerLike(models.Model):
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='likes')  # Added related_name
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='likes')  
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -116,7 +115,7 @@ class AnswerLike(models.Model):
         unique_together = ('answer', 'user')
 
 class AnswerDislike(models.Model):
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='dislikes')  # Added related_name
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='dislikes') 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

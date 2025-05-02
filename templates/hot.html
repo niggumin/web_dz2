@@ -1,4 +1,4 @@
-{% extends "layouts/standart.html" %}
+{% extends user.is_authenticated|yesno:"layouts/standart.html,layouts/standart_unauthorized.html" %}
 {% load static %}
 
 

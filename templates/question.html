@@ -1,5 +1,6 @@
-{% extends "layouts/standart.html" %}
+{% extends user.is_authenticated|yesno:"layouts/standart.html,layouts/standart_unauthorized.html" %}
 {% load static %}
+{% load bootstrap5 %}
 
 {% block content %} 
             <div class="d-flex align-items-center gap-2 mb-4">
@@ -78,11 +79,11 @@
         
             {% include "components/pagination.html" %}
             <div class="container">
-                <form>
-                    <div class="form-group">
-                        <textarea class="form-control" id="answerInput" rows="4" placeholder="Enter your answer..."></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-outline-success my-2">Answer</button>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+
+                    {% bootstrap_button button_type="submit" button_class="btn btn-outline-success btn-block" content="Answer" %}                        
                 </form>
             </div>
 

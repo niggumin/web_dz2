@@ -1,5 +1,6 @@
 {% extends "layouts/standart_unauthorized.html" %}
 {% load static %}
+{% load bootstrap5 %}
 
 {% block content %} 
             <div class="d-flex align-items-center gap-2 mb-4">
@@ -16,33 +17,11 @@
             
             <div class="container">
                 <div class="registration-container">
-              
-                    <form>
-                        <div class="form-group mb-2">
-                            <label for="login">Login</label>
-                            <input type="text" class="form-control" id="login" required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password"  required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label for="repeatPassword">Repeat Password</label>
-                            <input type="password" class="form-control" id="repeatPassword"  required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="formFileSm" class="form-label">Upload your avatar</label>
-                            <input class="form-control form-control-sm" id="formFileSm" type="file">
-                          </div>
-                        <button type="submit" class="btn btn-success btn-block">Register</button>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        {% bootstrap_button button_type="submit" button_class="btn btn-outline-success btn-block" content="Registration" %}                        
                     </form>
                 </div>
             </div>
