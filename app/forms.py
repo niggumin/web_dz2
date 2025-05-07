@@ -1,7 +1,9 @@
+import app.views
 from .models import Answer, Profile, Question, Tag
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
@@ -23,11 +25,13 @@ class AnswerForm(forms.ModelForm):
             })
         }
     
-    def clean_content(self):
-        content = self.cleaned_data['content']
-        if len(content) < 1:
-            raise forms.ValidationError("Your Answer Is Empty")
-        return content
+    # def clean_content(self):
+    #     content = self.cleaned_data['content']
+    #     if len(content) < 1:
+    #         raise forms.ValidationError("Your Answer Is Empty")
+    #     return content
+    
+    
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,45 +42,67 @@ class AnswerForm(forms.ModelForm):
 
 
 
+
 class QuestionForm(forms.ModelForm):
+    title = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your question title'
+        }),
+        error_messages={
+            'required': 'Title is required'
+        }
+    )
+
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={
+            'class': 'btn-check',
+            'autocomplete': 'off'
+        }),
+        required=False,
+        label="Tags"
+    )
+
     class Meta:
         model = Question
-        fields = ['title', 'content']
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
-        }
+        fields = ['title', 'content', 'tags']  
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
-        tags = kwargs.pop('tags', None)
+        self.user = kwargs.pop('user', None)  
         super().__init__(*args, **kwargs)
         
-        if tags:
-            self.fields['tags'] = forms.ModelMultipleChoiceField(
-                queryset=tags,
-                widget=forms.CheckboxSelectMultiple,
-                required=False,
-                label="Select Tags"
-            )
+
+
+    # def clean_content(self):
+    #     content = self.cleaned_data['content']
+    #     if len(content) < 1:
+    #         raise forms.ValidationError("Your comment Is Empty")
+    #     return content
+    
+    # def clean_title(self):
+    #     title = self.cleaned_data['title']
+    #     if len(title) < 1:
+    #         raise forms.ValidationError("Your title Is Empty")
+    #     return title
+    
 
     def save(self, commit=True):
-        question = super().save(commit=False)
-        question.author = self.user.profile
-        
+        question = super().save(commit=False) 
+
+        if self.user and hasattr(self.user, 'profile'):
+            question.author = self.user.profile  
+
         if commit:
             question.save()
-            if 'tags' in self.cleaned_data:
-                question.tags.set(self.cleaned_data['tags'])
-        
+            self.save_m2m()  
+
         return question
-    
-
-
-
-
 
     
+
+
 
 class ProfileForm(UserCreationForm):
     email = forms.EmailField(required=True)

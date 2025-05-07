@@ -161,23 +161,17 @@ def signup(request):
 @login_required(login_url=reverse_lazy("login"))
 def ask(request):
     popular_tags = get_popular_tags()
-    tag_page = pagination(popular_tags, request)
+    all_tags = Tag.objects.all()  
+    tag_page = pagination(all_tags, request)
 
     if request.method == 'POST':
-        form = QuestionForm(
-            request.POST,
-            tags=popular_tags,
-            user=request.user
-        )
+        form = QuestionForm(request.POST, user=request.user) 
         if form.is_valid():
-            question = form.save()
+            question = form.save()  
             return redirect('question', question_id=question.id)
+
     else:
-        form = QuestionForm(
-            tags=popular_tags,
-            user=request.user
-        )
-        
+        form = QuestionForm(user=request.user)
     return render(request, 'ask.html', context={'popular_tags': popular_tags, 'form': form, 'tag_page': tag_page})
 
 
