@@ -11,14 +11,28 @@
             
             <div class="row mb-5">
                 <div class="col-2 ">
-                    <div style="height: 75px; max-width: 75px;" class="border mx-auto mb-2 w-100 ">
-                        <img src="{% static '/img/asker_picture.png' %}" alt="img" class="img-fluid", style="height: 75px; width: 75px;">
+                    <div style="height: 75px; max-width: 75px;" class="border mx-2 mb-2 w-100 ">
+                        {% if question.author.avatar %}
+                            <img src="{{ question.author.avatar.url }}" class="rounded float-start" alt="img" style="width: 75px; height: 75px">
+                        {% else %}
+                          <img src="{% static '/img/asker_picture.png' %}" class="rounded float-start" alt="img" style="width: 75px; height: 75px">
+                        {% endif %}
                     </div>    
-                    <div class="btn-group-vertical d-flex align-items-center">
-                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio{{question.id}}" autocomplete="off" checked>
-                        <label class="btn btn-outline-success" for="vbtn-radio{{question.id}}">Like | {{question.likes_count}}</label>
-                        <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio-{{question.id}}" autocomplete="off">
-                        <label class="btn btn-outline-danger" for="vbtn-radio-{{question.id}}">Dislike | {{question.dislikes_count}}</label>
+                    <div class="btn-group-vertical">
+                        <button type="button" 
+                                class="btn btn-outline-success like-btn" 
+                                data-id="{{ question.id }}"
+                                data-action="like"
+                                data-type="question">
+                            Likes <span class="like-count">{{ question.likes_count }}</span>
+                        </button>
+                        <button type="button" 
+                                class="btn btn-outline-danger dislike-btn" 
+                                data-id="{{ question.id }}"
+                                data-action="dislike"
+                                data-type="question">
+                            Dislikes <span class="dislike-count">{{ question.dislikes_count }}</span>
+                        </button>
                     </div>
                 </div>
                 <div class="col d-flex flex-column justify-content-between">
@@ -54,13 +68,27 @@
                     <div class="row">
                         <div class="col-1">
                             <div style="height: 60px; max-width: 60px;" class="border mx-2 mb-2 w-100">
-                                <img src="{% static '/img/asker_picture.png' %}" alt="img" class="img-fluid", style="height: 60px; width: 60px;">                            
+                                {% if answer.author.avatar %}
+                                    <img src="{{ answer.author.avatar.url }}" class="rounded float-start" alt="img" style="width: 60px; height: 60px">
+                                {% else %}
+                                <img src="{% static '/img/asker_picture.png' %}" class="rounded float-start" alt="img" style="width: 60px; height: 60px">
+                                {% endif %}                            
                             </div>    
                             <div class="btn-group-vertical">
-                                <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1{{ answer.id }}" autocomplete="off" checked>
-                                <label class="btn btn-outline-success" for="vbtn-radio1{{ answer.id }}">Like {{answer.likes_count}}</label>
-                                <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio3{{ answer.id }}" autocomplete="off">
-                                <label class="btn btn-outline-danger" for="vbtn-radio3{{ answer.id }}">Dislike {{answer.dislikes_count}}</label>
+                                <button type="button" 
+                                        class="btn btn-outline-success like-btn" 
+                                        data-id="{{ answer.id }}"
+                                        data-action="like"
+                                        data-type="answer">
+                                    Likes <span class="like-count">{{ answer.likes_count }}</span>
+                                </button>
+                                <button type="button" 
+                                        class="btn btn-outline-danger dislike-btn" 
+                                        data-id="{{ answer.id }}"
+                                        data-action="dislike"
+                                        data-type="answer">
+                                    Dislikes <span class="dislike-count">{{ answer.dislikes_count }}</span>
+                                </button>
                             </div>
                         </div>
                     
@@ -88,6 +116,9 @@
             </div>
 
           </articles>
-          
+
+<script src="{% static 'js/question.js' %}"></script>
+<script src="{% static 'js/GetCookie.js' %}"></script>
+
 
 {% endblock %}

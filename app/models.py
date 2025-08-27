@@ -28,7 +28,7 @@ class AnswerManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(blank=True, null=True)  
+    avatar = models.ImageField(blank=True, null=True, upload_to='uploads/')  
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -66,6 +66,8 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+    
+  
 
 
 class Answer(models.Model):

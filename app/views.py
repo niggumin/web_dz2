@@ -2,13 +2,14 @@
 from django.urls import reverse, reverse_lazy
 
 from app.forms import AnswerForm, LoginForm, ProfileForm, QuestionForm
-from .models import Profile, Question, Answer, Tag
+from .models import AnswerDislike, AnswerLike, Profile, Question, Answer, QuestionDislike, QuestionLike, Tag
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, Http404, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 
@@ -91,22 +92,19 @@ def search_tags(request):
 def question(request, question_id):
     try:
         question = get_object_or_404(Question, pk=question_id)
-        answers = question.answer_set.all()  
+        answers = question.answer_set.all().order_by('-created_at') 
         page = pagination(answers, request)
         popular_tags = get_popular_tags()
 
         form = AnswerForm()
         if request.method == "POST":
-            form = AnswerForm(request.POST)
+            form = AnswerForm(request.POST, user=request.user)
+            form.question = question  
             if form.is_valid():
-                if request.user.is_authenticated:  
-                    answer = form.save(commit=False)
-                    answer.question = question
-                    answer.author = request.user.profile
-                    answer.save()
-                    return redirect('question', question_id=question.id)
-                else:
-                    return redirect(reverse('login'))
+                form.save()
+                return redirect('question', question_id=question.id)
+            else:
+                return redirect(reverse('login'))
 
         context = {'question': question, 'answers': page.object_list, 'page_obj': page, 'popular_tags': popular_tags, 'form': form}
         return render(request, 'question.html', context=context)
@@ -189,3 +187,89 @@ def settings(request):
 def profile_list(request):
     profiles = Profile.objects.select_related('user').order_by('-created_at')
     return render(request, 'testProf.html', {'profiles': profiles})
+
+
+
+
+@login_required
+@require_POST
+def like_question(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    user = request.user
+    
+    QuestionDislike.objects.filter(question=question, user=user).delete()
+    
+    like, created = QuestionLike.objects.get_or_create(
+        question=question,
+        user=user
+    )
+    if not created:
+        like.delete()
+    
+    return JsonResponse({
+        'likes_count': question.likes_count(),
+        'dislikes_count': question.dislikes_count(),
+        'user_vote': 'none' if created else 'liked'
+    })
+
+@login_required
+@require_POST
+def dislike_question(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    user = request.user
+    
+    QuestionLike.objects.filter(question=question, user=user).delete()
+    
+    dislike, created = QuestionDislike.objects.get_or_create(
+        question=question,
+        user=user
+    )
+    if not created:
+        dislike.delete()
+    
+    return JsonResponse({
+        'likes_count': question.likes_count(),
+        'dislikes_count': question.dislikes_count(),
+        'user_vote': 'none' if created else 'disliked'
+    })
+
+
+@login_required
+@require_POST
+def like_answer(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    user = request.user
+    
+    AnswerDislike.objects.filter(answer=answer, user=user).delete()
+    
+    like, created = AnswerLike.objects.get_or_create(
+        answer=answer,
+        user=user
+    )
+    if not created:
+        like.delete()
+    
+    return JsonResponse({
+        'likes_count': answer.likes_count(),
+        'dislikes_count': answer.dislikes_count()
+    })
+
+@login_required
+@require_POST
+def dislike_answer(request, answer_id):
+    answer = get_object_or_404(Answer, pk=answer_id)
+    user = request.user
+    
+    AnswerLike.objects.filter(answer=answer, user=user).delete()
+    
+    dislike, created = AnswerDislike.objects.get_or_create(
+        answer=answer,
+        user=user
+    )
+    if not created:
+        dislike.delete()
+    
+    return JsonResponse({
+        'likes_count': answer.likes_count(),
+        'dislikes_count': answer.dislikes_count()
+    })

@@ -34,11 +34,23 @@ class AnswerForm(forms.ModelForm):
     
 
     def __init__(self, *args, **kwargs):
+        
+        self.user = kwargs.pop('user', None)
+        self.question = kwargs.pop('question', None)
         super().__init__(*args, **kwargs)
         self.fields['content'].label = ""
         self.fields['content'].help_text = None
     
-
+    def save(self, commit=True):
+        answer = super().save(commit=False)
+        if self.user and hasattr(self.user, 'profile'):
+            answer.author = self.user.profile
+        if hasattr(self, 'question'):  
+            answer.question = self.question
+        if commit:
+            answer.save()
+        return answer
+       
 
 
 
@@ -73,19 +85,6 @@ class QuestionForm(forms.ModelForm):
         self.user = kwargs.pop('user', None)  
         super().__init__(*args, **kwargs)
         
-
-
-    # def clean_content(self):
-    #     content = self.cleaned_data['content']
-    #     if len(content) < 1:
-    #         raise forms.ValidationError("Your comment Is Empty")
-    #     return content
-    
-    # def clean_title(self):
-    #     title = self.cleaned_data['title']
-    #     if len(title) < 1:
-    #         raise forms.ValidationError("Your title Is Empty")
-    #     return title
     
 
     def save(self, commit=True):
